@@ -1,0 +1,2 @@
+﻿安装C++编译器命令：  yum install gcc gcc-c++
+使用中需要将用到的开源软件信息写在make文件里面，以供Makefile文件调用。

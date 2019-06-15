@@ -1,0 +1,1 @@
+Give the detailed information of your installed software in this file. Then can be used by Makefile.

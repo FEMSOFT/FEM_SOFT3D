@@ -1,0 +1,76 @@
+#MAIN = ../example/main
+#MAIN = ../example/CreatMesh
+#MAIN = ../example/Elliptic
+#MAIN = ../example/Eigen
+#MAIN = ../example/elliptic3D
+#MAIN = ../example/eigenvalue
+#MAIN = ../example/BEC
+MAIN = ../example/MultiLaplace
+#MAIN = ../example/FullMGlaplace
+#MAIN = ../example/MultiLaplaceCopy
+#MAIN = ../example/Multilevel_Bec
+#MAIN = ../example/Multilevel_Becnewton
+#MAIN = ../example/Multilevel_BecCopy
+#MAIN = ../example/Multilevel_Beccopy2
+#MAIN = ../example/BEC_MIX
+#MAIN = ../example/FixedPointBEC
+#MAIN = ../example/MultipleEigenvalue
+#MAIN = ../example/Aelliptic
+#MAIN = ../example/AellipticDirect
+#MAIN = ../example/BEC-gamma
+#MAIN = ../example/Anonlinear
+#MAIN = ../example/AnonlinearDirect
+#MAIN = ../example/LinearEigen
+#MAIN = ../example/CompareAnonlinear
+#MAIN = ../example/CompareAelliptic
+#MAIN = ../example/AdaptiveBec
+#MAIN = ../example/AFEMLinerEigen
+#MAIN = ../example/AFEM4GeneralEigen
+#MAIN = ../example/AdaptiveTFVM
+#MAIN = ../example/AdaptiveKSHe
+#MAIN = ../example/AdaptiveKSHeExp
+#MAIN = ../example/AdaptiveKSHeExp2
+#MAIN = ../example/AdaptiveH
+#MAIN = ../example/MGBEC_MIX
+#MAIN =../example/MPIEigen
+#MAIN = ../example/OpenmpEigen
+#MAIN = ../example/OpenMP
+
+#MAIN = ../example/CoupleBEC_MIX
+#MAIN = ../example/CoupleBEC
+#MAIN = ../example/CoupleBECMultilevel
+
+
+
+
+
+
+
+
+
+
+SELFLIB = ../lib/solvers.a
+include ./make.inc
+# If you want to check the momory, please use 
+# valgrind --leak-check=full ./main > check
+
+$(MAIN) : $(OBJECTS)
+	$(CC) $(CPPFLAGS)  $(CFLAGS) -fopenmp  -o $@ $^ $(LIBS)
+.c.o:
+	$(CC) $(CPPFLAGS)  $(CFLAGS) -fopenmp  -o $*.o -c $*.c
+
+
+.PHONY:lib
+lib : $(SELFLIB)
+$(SELFLIB) : $(filter-out $(MAIN).o, $(OBJECTS))
+	ar cr $@ $^
+
+	
+clean : 
+	rm -f $(OBJECTS) 
+	rm -rf $(SELFLIB)
+	rm -rf $(MAIN)
+	rm -rf *~
+	rm -rf ../*~
+	rm -rf ../*/*~
+	rm -rf ../*/*/*~
